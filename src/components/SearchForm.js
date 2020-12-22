@@ -79,11 +79,22 @@ const [stockdata,setStockData]= useState([]);
 //   yield_ratio: '',
 //   yield_ratio_percent: '',
 //   id:''
-// }
+// }  const [per, setPer] = useState("");
+const [sortChkVal,setSortChkVal] = useState(true);
+const [tableTypeChk,setTableTypeChk] = useState("");
+const [sortBtn,setSortBtn] = useState("");
 
+const tfuncSort=(event)=>{
+  setSortBtn(event.target.id);
+  console.log("btn test :",event.target.id);
+}
 const alignFunc = (event)=>{
-
-  console.log('alignFunc =' ,event.stockdata);
+  setSortChkVal(false);
+  setTableTypeChk(''+event.target.id);
+  
+  console.log('alignFunc = tval2  : ' ,tableTypeChk);
+  
+  
   
   //const arr = [5, 100, 20];
   //arr.sort((a, b) => b - a);
@@ -139,8 +150,8 @@ const alignFunc = (event)=>{
         <InputGroup>
           
           <InputGroup.Append >
-            <Button variant="outline-secondary" id ="descBtn" onClick={alignFunc} >Desc</Button>
-            <Button variant="outline-secondary" id ="ascBtn" onClick={alignFunc} >Asc</Button>
+            <Button variant="outline-secondary" onClick={tfuncSort} id ="descBtn" value="Desc">Desc</Button>
+            <Button variant="outline-secondary" onClick={tfuncSort} id ="ascBtn" value="Asc">Asc</Button>
           </InputGroup.Append>
         </InputGroup>
   
@@ -160,25 +171,49 @@ const alignFunc = (event)=>{
                   <th>종목코드</th>
                   <th>종목이름</th>
                   <th>총매출액</th>
-                  <th onClick={alignFunc}>PEG</th>
-                  <th>PER</th>
-                  <th>PBR</th>
-                  <th>1년전가격</th>
-                  <th>현재가격</th>
-                  <th>가격차이</th>
+                  <th onClick={alignFunc} id="peg_percent" value="peg_percent">PEG</th>
+                  <th onClick={alignFunc} id="per" value="per">PER</th>
+                  <th onClick={alignFunc} id="pbr" value="pbr">PBR</th>
+                  <th onClick={alignFunc} id="b1yprice" value="b1yprice">1년전가격</th>
+                  <th onClick={alignFunc} id="nowprice" value="nowprice">현재가격</th>
+                  <th onClick={alignFunc} id="price_percent" value="price_percent">가격차이</th>
 
               </tr>
               
           </thead>
           {/* obj 넘겨줄 때   stockobject = {stockdata} 하니까 조건식을 거쳤을때 값이 제대로 안나왔는데, stockobject = {Data} 로 하니까 값이 정상적으로 나온다. 
           map 메소드가 callback 함수이고,여기서 callback인 Data를 사용하지 않고 stockdata를 사용하려고 해서 값을 읽기 전에 출력이 되는 바람에 undefined 가 출력된 것.
-           . 지금은 조건식까지 된 상태. */}
+           . 조건식 if문으로 처리 . 정렬버튼도 기능은 적용됨. */}
            {/* map 의 원리 : map 메소드 안에 반복문을 돌며 배열 안의 요소들과 1:1로 짝을 이룬 구조 */}
-              {stockdata.sort((a,b)=>b.price_percent - a.price_percent).map((Data) =>  
-         
-                  <StockdataResult key = {Data.id} checkVal={inputs.perInput >= Data.per}  stockobject = {Data} code ={Data.code} name={Data.name} total_income = {Data.total_income} pbr={Data.pbr} 
-                  peg_percent={Data.peg_percent} per={Data.per} b1yprice = {Data.b1yprice} nowprice={Data.nowprice} price_percent={Data.price_percent}/>   
-              )}
+          
+           {
+            sortChkVal ? 
+              
+                stockdata.sort((a,b)=>b.price_percent - a.price_percent).map((Data) =>  
+                <StockdataResult key = {Data.id} checkVal={inputs.perInput >= Data.per}  stockobject = {Data} code ={Data.code} name={Data.name} total_income = {Data.total_income} pbr={Data.pbr} 
+                peg_percent={Data.peg_percent} per={Data.per} b1yprice = {Data.b1yprice} nowprice={Data.nowprice} price_percent={Data.price_percent}/>   
+            )
+             :  
+             stockdata.sort((a,b)=> {
+               if(tableTypeChk == 'peg_percent' && (sortBtn == 'descBtn' || sortBtn == '')) return (b.peg_percent - a.peg_percent);
+               if(tableTypeChk == 'peg_percent' && (sortBtn == 'ascBtn' || sortBtn == '')) return (a.peg_percent - b.peg_percent);
+
+               if(tableTypeChk == 'per') return (b.per - a.per);
+               if(tableTypeChk == 'pbr') return (b.pbr - a.pbr);
+               if(tableTypeChk == 'b1yprice') return (b.b1yprice - a.b1yprice);
+               if(tableTypeChk == 'nowprice') return (b.nowprice - a.nowprice);
+               if(tableTypeChk == 'price_percent') return (b.price_percent - a.price_percent);
+              }
+             ).map((Data) =>  
+             <StockdataResult key = {Data.id} checkVal={inputs.perInput >= Data.per}  stockobject = {Data} code ={Data.code} name={Data.name} total_income = {Data.total_income} pbr={Data.pbr} 
+             peg_percent={Data.peg_percent} per={Data.per} b1yprice = {Data.b1yprice} nowprice={Data.nowprice} price_percent={Data.price_percent}/>
+             
+             )
+           
+           }
+      
+              
+
             </Table>
           </>
         )}
