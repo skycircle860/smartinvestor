@@ -139,8 +139,7 @@ const alignFunc = (event)=>{
     
     <>
     
-      
-      <Form onSubmit={onSubmit} className="container"> 
+      <form onSubmit={onSubmit} className="container">
         <span className="title">StockSearch</span>
         {/* <input
           name="stockname"
@@ -150,35 +149,22 @@ const alignFunc = (event)=>{
           onChange={onChange}
           value={stockname}
         /> */}
-        
-        <br/><br/><br/><br/><br/><br/><br/><br/>
-        
-        
-        
-          <Form.Row>
-            <Form.Group as={Col.md} controlId="formGridEmail">
-              <Form.Label>Peg</Form.Label>
-              <Form.Control type="number"  className = "inputs" name="pegInput" placeholder="peg 이하" onChange={onChange} value={pegInput} />
-            </Form.Group>
-
-            <Form.Group as={Col.md} controlId="formGridPassword">
-              <Form.Label>Per</Form.Label>
-              <Form.Control type="number" className = "inputs" name="perInput" placeholder="per 이하" onChange={onChange}  value={perInput}  />
-            </Form.Group>
-            
-            
-            <Form.Group as={Col.md} className="btnT">
-              <Button variant="success" onClick={tfuncSort} id ="descBtn" value="Desc">Desc</Button>
-              <Button variant="danger" onClick={tfuncSort} id ="ascBtn" value="Asc">Asc</Button>
-            </Form.Group>
-            <Form.Group as={Col.md} className="btnT">
-            <Button variant="primary"  className="searchBtn" name="searchBtn" type="submit">
-              조회
-            </Button></Form.Group>
-          </Form.Row>
-
-         
-        
+        <button className="searchBtn" name="searchBtn" type="submit">조회</button>
+        <br/><br/>
+        <table className="inputDiv">
+          <tr>
+            <td ><h4>peg <input type="number"  className = "inputs" name="pegInput" placeholder="peg" onChange={onChange} value={pegInput}/>이하</h4></td>
+            <td><h4>per <input type="number" className = "inputs" name="perInput" placeholder="per" onChange={onChange}  value={perInput} />이하</h4></td>
+          </tr>
+        </table>
+        <InputGroup>
+          
+          <InputGroup.Append >
+            <Button variant="outline-secondary" onClick={tfuncSort} id ="descBtn" value="Desc" >Desc</Button>
+            <Button variant="outline-secondary" onClick={tfuncSort} id ="ascBtn" value="Asc">Asc</Button>
+          </InputGroup.Append>
+          
+        </InputGroup>
         
         {/* 해당 맵 데이터를 제대로 출력할려면 비교값이 있어서 그걸 토대로 뽑아내야한다. 지금방식은 맵의 갯수만큼 반복이 되기는 하나 번호대로 꺼내는것도
         아이디와 같은값의 값을 가져온다던지 하는 조건식을 부여한것도 아니므로 출력이 안된다. */}
@@ -257,8 +243,32 @@ const alignFunc = (event)=>{
         )}
          
         </div>  
-        
-      </Form> 
+        <Form className="ftF">
+          <Form.Row>
+            <Form.Group as={Col.md} controlId="formGridEmail">
+              <Form.Label>Peg</Form.Label>
+              <Form.Control type="text" placeholder="peg 이하" />
+            </Form.Group>
+
+            <Form.Group as={Col.md} controlId="formGridPassword">
+              <Form.Label>Per</Form.Label>
+              <Form.Control type="password" placeholder="per 이하" />
+            </Form.Group>
+            
+            
+            <Form.Group as={Col.md} className="btnT">
+              <Button variant="outline-secondary" onClick={tfuncSort} id ="descBtn2" value="Desc">Desc</Button>
+              <Button variant="outline-secondary" onClick={tfuncSort} id ="ascBtn3" value="Asc">Asc</Button>
+            </Form.Group>
+            <Form.Group as={Col.md} className="btnT">
+            <Button variant="primary" type="submit" className="tBtn" >
+              조회
+            </Button></Form.Group>
+          </Form.Row>
+
+         
+        </Form> 
+      </form>
       
     </>
   );

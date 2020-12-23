@@ -4,9 +4,9 @@ import React, { useState } from "react";
 //import Table from 'react-bootstrap/Table';
 
 const StockdataResult = ({stockobject,checkVal}) =>{
-    console.log("checkVal is " , stockobject.peg_percent);
-    console.log("per is " , stockobject.per);
-    console.log("name is " , stockobject.name);
+    // console.log("checkVal is " , stockobject.peg_percent);
+    // console.log("per is " , stockobject.per);
+    // console.log("name is " , stockobject.name);
     
     return (     
         <tbody>
