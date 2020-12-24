@@ -149,7 +149,8 @@ const alignFunc = (event)=>{
           required
           onChange={onChange}
           value={stockname}
-        /> */}
+        />
+        <input id="searchBtn" type="button"  onClick={onSubmit} value="검색"/> */}
         
         <br/><br/><br/><br/><br/><br/><br/><br/>
         

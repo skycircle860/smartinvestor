@@ -22,6 +22,7 @@ const StockdataResult = ({stockobject,checkVal}) =>{
             <td>{stockobject.nowprice}</td>
             <td>{stockobject.price_percent}%</td>
             </tr></>
+            
             ) 
             }
 
